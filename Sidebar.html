@@ -50,6 +50,31 @@
 					</select>
 				</div>
 
+                <h3>Mailchimp settings</h3>
+
+                <div class="block form-group" id="mailchimp-settings">
+
+                    <!-- API Key -->
+                    <label for="api-key">
+                        API Key
+                    </label>
+                    <input type="password" id="api-key" class="width-100">
+
+                    <br>
+
+                    <!-- list ID -->
+                    <label for="list-id">
+                        Audience ID
+                    </label>
+                    <input type="text" id="list-id" class="width-100">
+
+                    <br>
+
+                    <!-- help -->
+                    <a href="#">How to find your Audience ID and API Key</a>
+
+                </div>
+
 				<div class="block" id="button-bar">
 					<button class="action" id="save-settings">Save</button>
 				</div>
@@ -115,6 +140,14 @@
 				if (settings.phoneNumber) {
 					$('#phone-number option[value="'+settings.phoneNumber+'"]').attr('selected', 'selected');
 				}
+
+                if (settings.apiKey) {
+                    $('#api-key').val(settings.apiKey);
+                }
+
+                if (settings.listId) {
+                    $('#list-id').val(settings.listId);
+                }
 			}
 
 			// collect settings and send them to be saved as Properties on the server
@@ -124,11 +157,15 @@
 				var firstName = $('#first-name').val();
 				var lastName = $('#last-name').val();
 				var phoneNumber = $('#phone-number').val();
+                var apiKey = $('#api-key').val();
+                var listId = $('#list-id').val();
 
 				var settings = {
 					'firstName' : firstName,
 					'lastName' : lastName,
-					'phoneNumber' : phoneNumber
+					'phoneNumber' : phoneNumber,
+                    'apiKey' : apiKey,
+                    'listId' : listId
 				};
 
 				// save settings on the server
