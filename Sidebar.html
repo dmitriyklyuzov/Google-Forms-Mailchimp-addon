@@ -176,7 +176,7 @@
 				google.script.run
 				.withSuccessHandler(
 					function(msg, element) {
-						showStatus('Saved settings', $('#save-settings'));
+						showStatus('Settings saved', $('#save-settings'));
 						element.disabled = false;
 					})
 				.withFailureHandler(
