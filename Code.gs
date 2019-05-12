@@ -21,6 +21,14 @@ function showSidebar() {
 	FormApp.getUi().showSidebar(ui);
 }
 
+/* opens the help dialog explaining how to get Mailchimp Api Key and List ID */
+function showHelp() {
+    var ui = HtmlService.createHtmlOutputFromFile('Help')
+        .setWidth(420)
+        .setHeight(320);
+    FormApp.getUi().showModalDialog(ui, 'How to find your Audience ID and API Key');
+}
+
 /* save settings to this form's properties */
 function saveSettings(settings) {
 	PropertiesService.getDocumentProperties().setProperties(settings);

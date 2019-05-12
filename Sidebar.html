@@ -71,7 +71,7 @@
                     <br>
 
                     <!-- help -->
-                    <a href="#">How to find your Audience ID and API Key</a>
+                    <a href="#" id="get-help">How to find your Audience ID and API Key</a>
 
                 </div>
 
@@ -88,6 +88,7 @@
 			// assign handlers to elements 
 			$(function() {
 				$('#save-settings').click(saveSettingsToServer);
+				$('#get-help').click(showHelp);
 				google.script.run
 				.withSuccessHandler(loadSettings)
 				.withFailureHandler(showStatus)
@@ -95,6 +96,11 @@
 				.getSettings();
 			});
 
+			// show help dialog
+			function showHelp(e) {
+			    e.preventDefault();
+			    google.script.run.showHelp();
+			}
 
 			// load settings
 			function loadSettings(settings) {
