@@ -99,11 +99,6 @@
 			// load settings
 			function loadSettings(settings) {
 
-			    // TODO: Remove
-				// console.log('loading settings');
-
-				// console.log(settings);
-
 				// fill the 'First name' select box with titles
 				settings.textItems.forEach(function(textItem){
 					var option = $('<option>')
@@ -169,7 +164,6 @@
 				};
 
 				// save settings on the server
-				// Save the settings on the server
 				google.script.run
 				.withSuccessHandler(
 					function(msg, element) {
