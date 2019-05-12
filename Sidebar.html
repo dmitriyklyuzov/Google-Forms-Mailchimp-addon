@@ -11,6 +11,9 @@
 				-webkit-box-sizing: border-box;
 				-moz-box-sizing: border-box;
 			}
+			#status {
+				margin-left: 10px;
+			}
 		</style>
 	</head>
 	<body>
@@ -173,12 +176,12 @@
 				google.script.run
 				.withSuccessHandler(
 					function(msg, element) {
-						showStatus('Saved settings', $('#button-bar'));
+						showStatus('Saved settings', $('#save-settings'));
 						element.disabled = false;
 					})
 				.withFailureHandler(
 					function(msg, element) {
-						showStatus(msg, $('#button-bar'));
+						showStatus(msg, $('#save-settings'));
 						element.disabled = false;
 					})
 				.withUserObject(this)
@@ -187,7 +190,7 @@
 
 			// insert a div with a status message after a given element
 			function showStatus(msg, element) {
-				var div = $('<div>')
+				var div = $('<span>')
 				.attr('id', 'status')
 				.attr('class','error')
 				.text(msg);
