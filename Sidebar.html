@@ -16,35 +16,36 @@
 	<body>
 		<div class="sidebar">
 			<form id="settings-form">
-				<h3>Google Forms settings</h3>
+				
+				<h3>Form settings</h3>
 				
 				<!-- first name question -->
-				<div class="block form-group" id="respondent-notify">
+				<div class="block form-group" id="form-settings">
 					
-					<label for="respondent-first-name">
+					<label for="first-name">
 						Which question asks for first name?
 					</label>
-					<select id="respondent-first-name" class="width-100">
+					<select id="first-name" class="width-100">
 						<option value="none">Not collecting first names</option>
 					</select>
 
 					<br>
 
 					<!-- last name question -->
-					<label for="respondent-last-name">
+					<label for="last-name">
 						Which question asks for last name?
 					</label>
-					<select id="respondent-last-name" class="width-100">
+					<select id="last-name" class="width-100">
 						<option value="none">Not collecting last names</option>
 					</select>
 
 					<br>
 
 					<!-- phone number question -->
-					<label for="respondent-phone-number">
+					<label for="phone-number">
 						Which question asks for phone number?
 					</label>
-					<select id="respondent-phone-number" class="width-100">
+					<select id="phone-number" class="width-100">
 						<option value="none">Not collecting phone numbers</option>
 					</select>
 				</div>
@@ -72,12 +73,18 @@
 
 			// load settings
 			function loadSettings(settings) {
+
+			    // TODO: Remove
+				// console.log('loading settings');
+
+				// console.log(settings);
+
 				// fill the 'First name' select box with titles
 				settings.textItems.forEach(function(textItem){
 					var option = $('<option>')
 					.attr('value', textItem['id'])
 					.text(textItem['title']);
-					$('#respondent-first-name').append(option);
+					$('#first-name').append(option);
 				});
 
 				// fill the 'Last name' select box with titles
@@ -85,7 +92,7 @@
 					var option = $('<option>')
 					.attr('value', textItem['id'])
 					.text(textItem['title']);
-					$('#respondent-last-name').append(option);
+					$('#last-name').append(option);
 				});
 
 				// fill the 'Phone number' select box with titles
@@ -93,20 +100,20 @@
 					var option = $('<option>')
 					.attr('value', textItem['id'])
 					.text(textItem['title']);
-					$('#respondent-phone-number').append(option);
+					$('#phone-number').append(option);
 				});
 				
 				// populate fields with current settings
-				if (settings.firstNameField) {
-					$('#respondent-first-name option[value="'+settings.firstNameField+'"]').attr('selected', 'selected');
+				if (settings.firstName) {
+					$('#first-name option[value="'+settings.firstName+'"]').attr('selected', 'selected');
 				}
 				
-				if (settings.lastNameField) {
-					$('#respondent-last-name option[value="'+settings.lastNameField+'"]').attr('selected', 'selected');
+				if (settings.lastName) {
+					$('#last-name option[value="'+settings.lastName+'"]').attr('selected', 'selected');
 				}
 				
-				if (settings.phoneNumberField) {
-					$('#respondent-phone-number option[value="'+settings.phoneNumberField+'"]').attr('selected', 'selected');
+				if (settings.phoneNumber) {
+					$('#phone-number option[value="'+settings.phoneNumber+'"]').attr('selected', 'selected');
 				}
 			}
 
@@ -114,14 +121,14 @@
 			function saveSettingsToServer() {
 				this.disabled = true;
 
-				var firstNameField = $('#respondent-first-name').val();
-				var lastNameField = $('#respondent-last-name').val();
-				var phoneNumberField = $('#respondent-phone-number').val();
+				var firstName = $('#first-name').val();
+				var lastName = $('#last-name').val();
+				var phoneNumber = $('#phone-number').val();
 
 				var settings = {
-					'firstNameField' : firstNameField,
-					'lastNameField' : lastNameField,
-					'phoneNumberField' : phoneNumberField
+					'firstName' : firstName,
+					'lastName' : lastName,
+					'phoneNumber' : phoneNumber
 				};
 
 				// save settings on the server
