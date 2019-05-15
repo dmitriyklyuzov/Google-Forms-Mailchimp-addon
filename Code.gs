@@ -32,6 +32,7 @@ function showHelp() {
 /* save settings to this form's properties */
 function saveSettings(settings) {
 	PropertiesService.getDocumentProperties().setProperties(settings);
+    adjustFormSubmitTrigger();
 }
 
 /* gets a collection of property values used to fill the sidebar */
@@ -51,4 +52,38 @@ function getSettings() {
 		});
 	});
 	return settings;
+}
+
+// adjust onFormSubmit trigger
+function adjustFormSubmitTrigger() {
+	var form = FormApp.getActiveForm();
+	var triggers = ScriptApp.getUserTriggers(form);
+
+	var existingTrigger = null;
+
+	// check if there's already an existing onSubmit trigger
+    for (var i = 0; i < triggers.length; i++) {
+    	// onSubmit trigger exists
+        if (triggers[i].getEventType() == ScriptApp.EventType.ON_FORM_SUBMIT) {
+            existingTrigger = triggers[i];
+            Logger.log('Existing onSubmit trigger found, no need to create one');
+            break;
+        }
+    }
+
+    // if no onSubmit trigger yet, create it
+	if (!existingTrigger) {
+        Logger.log('No onSubmit trigger found, creating one');
+        var trigger = ScriptApp.newTrigger('onSubmit')
+            .forForm(form)
+            .onFormSubmit()
+            .create();
+	}
+}
+
+// process form response
+function onSubmit(e) {
+	var response = e.response;
+
+	Logger.log('response: ' + response);
 }
