@@ -1,7 +1,7 @@
-/* addon title */
+// addon title
 var ADDON_TITLE = 'Mailchimp Integration';
 
-/* custom menu to show the addon sidebar */
+// custom menu to show the add-on sidebar
 function onOpen(e) {
 	FormApp.getUi()
 			.createAddonMenu()
@@ -9,19 +9,19 @@ function onOpen(e) {
 			.addToUi();
 }
 
-/* run onOpen when addon is installed */
+// run onOpen when add-on is installed
 function onInstall(e) {
 	onOpen(e);
 }
 
-/* opens a sidebar to configure Mailchimp integration */
+// opens a sidebar to configure Mailchimp integration
 function showSidebar() {
 	var ui = HtmlService.createHtmlOutputFromFile('Sidebar')
 			.setTitle('Configure Mailchimp');
 	FormApp.getUi().showSidebar(ui);
 }
 
-/* opens the help dialog explaining how to get Mailchimp Api Key and List ID */
+// opens the help dialog explaining how to get Mailchimp Api Key and List ID
 function showHelp() {
     var ui = HtmlService.createHtmlOutputFromFile('Help')
         .setWidth(420)
@@ -29,13 +29,13 @@ function showHelp() {
     FormApp.getUi().showModalDialog(ui, 'How to find your Audience ID and API Key');
 }
 
-/* save settings to this form's properties */
+// save settings to this form's properties & adjust form triggers
 function saveSettings(settings) {
 	PropertiesService.getDocumentProperties().setProperties(settings);
     adjustFormSubmitTrigger();
 }
 
-/* gets a collection of property values used to fill the sidebar */
+// gets a collection of property values used to fill the sidebar
 function getSettings() {
 	var settings = PropertiesService.getDocumentProperties().getProperties();
 	
