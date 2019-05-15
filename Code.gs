@@ -83,7 +83,47 @@ function adjustFormSubmitTrigger() {
 
 // process form response
 function onSubmit(e) {
+
+	// response from form submit event
 	var response = e.response;
 
-	Logger.log('response: ' + response);
+	// get current settings
+	var settings = getSettings();
+
+	Logger.log('response: ');
+    Logger.log(response);
+
+	// respondent email
+	var email = response.getRespondentEmail();
+
+    Logger.log('email: ' + email);
+
+	// response items
+	var items = response.getItemResponses();
+
+    // object of parsed (key-value) response data
+    var parsedData = {};
+
+    Logger.log('Looping through response items');
+
+    for (i in items){
+        var key = items[i].getItem().getId();
+        var val = items[i].getResponse();
+        Logger.log(key + ': ' + val);
+        parsedData[key] = val;
+    }
+
+    Logger.log('parsed data: ' + parsedData);
+
+    var data = {
+        "email_address" : email,
+        "status" : "subscribed",
+        "merge_fields" : {
+            "FNAME" : parsedData[settings['firstName']],
+            "LNAME" : parsedData[settings['last_name']],
+            "PHONE" : parsedData[settings['phone']]
+        }
+    };
+
+    Logger.log('data: ' + data);
 }
