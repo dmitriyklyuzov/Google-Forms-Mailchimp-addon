@@ -125,8 +125,8 @@ function onSubmit(e) {
         "status" : "subscribed",
         "merge_fields" : {
             "FNAME" : parsedData[settings['firstName']],
-            "LNAME" : parsedData[settings['last_name']],
-            "PHONE" : parsedData[settings['phone']]
+            "LNAME" : parsedData[settings['lastName']],
+            "PHONE" : parsedData[settings['phoneNumber']]
         }
     };
 
