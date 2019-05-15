@@ -1,6 +1,11 @@
 // addon title
 var ADDON_TITLE = 'Mailchimp Integration';
 
+// script constants
+var PROTOCOL = 'https';
+var ENDPOINT = 'api.mailchimp.com/';
+var API_VER = '3.0';
+
 // custom menu to show the add-on sidebar
 function onOpen(e) {
 	FormApp.getUi()
@@ -126,4 +131,49 @@ function onSubmit(e) {
     };
 
     Logger.log('data: ' + data);
+
+    Logger.log('calling sendData()');
+    // perform ajax request
+    sendData(data, settings);
+}
+
+// sends data to Mailchimp API
+function sendData(data, settings){
+
+    // save endpoint in settings if not saved yet
+    if (settings['endpoint'] == '') {
+        Logger.log('endpoint is empty, building it');
+        var endpoint  = PROTOCOL + '://' + settings['dataCenter'] + '.' + ENDPOINT + API_VER + '/';
+        Logger.log('endpoint: ' + endpoint);
+        settings['endpoint'] = endpoint;
+        Logger.log('saving settings');
+        saveSettings(settings);
+    }
+
+    // build url to make the request to
+    var url = settings['endpoint'] + 'lists/' + settings['listId'] + '/members/';
+
+    // username could be anything
+    var username = 'forms';
+
+
+    var auth = Utilities.base64Encode(username+':'+settings['apiKey'], Utilities.Charset.UTF_8);
+    var option = {
+        headers: {
+            'Authorization' : 'Basic ' + auth,
+            'contentType' : 'application/json',
+        },
+        'method' : 'post',
+        'payload' : JSON.stringify(data)
+    };
+
+    Logger.log('About to perform a '+ option.headers['method'] + ' request to ' + url);
+
+    // perform request
+    var response = UrlFetchApp.fetch(url, option);
+    response2 = JSON.parse(response);
+
+    Logger.log('Request complete');
+
+    // Logger.log('Logging response: ' + response.getContentText());
 }
