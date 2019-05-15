@@ -163,13 +163,25 @@
 				var phoneNumber = $('#phone-number').val();
                 var apiKey = $('#api-key').val();
                 var listId = $('#list-id').val();
+                var dataCenter = '';
+
+                // get data center from API Key
+				if (apiKey && apiKey.length) {
+                    // data center is everything after the dash
+					var apiKeyParts = apiKey.split('-');
+					// part 1 exists
+					if (1 in apiKeyParts) {
+                        dataCenter = apiKeyParts[1]; // ex us12
+					}
+				}
 
 				var settings = {
 					'firstName' : firstName,
 					'lastName' : lastName,
 					'phoneNumber' : phoneNumber,
                     'apiKey' : apiKey,
-                    'listId' : listId
+                    'listId' : listId,
+					'dataCenter' : dataCenter
 				};
 
 				// save settings on the server
